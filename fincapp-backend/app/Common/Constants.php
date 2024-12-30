@@ -16,4 +16,9 @@ class Constants {
     public const BIOMETRICOS_MATERIAL_TOMAS_ESTADOS = ["Vivo", "Muerto", "Cría", "Padrón", "Lactante/Con cría", "Preñada"];
 
     public const FACTURAS_ESTADOS = ["Debe", "Pagada"];
+    public const FACTURA_ESTADOS_DEBE = "Debe";
+    public const FACTURA_ESTADOS_PAGADA = "Pagada";
+
+    public const KARDEX_TIPO_MOVIMIENTO_SALE = "Sale";
+    public const KARDEX_TIPO_MOVIMIENTO_ENTRA = "Entra";
 }

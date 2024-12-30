@@ -96,12 +96,14 @@ abstract class BaseRepository {
         return $this->getModel()->find($id);
     }
 
-    public function getAll($paginate = 10){
-        return $this->getModel()->paginate($paginate);
-    }
-
-    public function getAllEstado($paginate = 10){
-        return $this->getModel()->paginate($paginate);
+    public function getAll($paginate = 0){
+        $result = null;
+        if($paginate == 0){
+            $result = $this->getModel()->get();
+        }else{
+            $result = $this->getModel()->paginate($paginate);
+        }
+        return $result;
     }
 
     public function update($object, $data){

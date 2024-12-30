@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('compras', function (Blueprint $table) {
             $table->id();
             $table->date("fecha_compra")->index();
-            $table->double("total");
+            $table->double("total")->nullable();
 
             $table->unsignedBigInteger("tercero_id")->nullable();
             $table->foreign("tercero_id")

@@ -8,4 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class Kardex extends Model
 {
     use HasFactory;
+
+    protected $table = "kardexes";
+    protected $guarded = [];
 }

@@ -18,7 +18,7 @@ return new class extends Migration
             $table->unsignedInteger("numero");
             $table->date("fecha_pago")->nullable();
             $table->enum("estado", Constants::FACTURAS_ESTADOS)->default("Pagada");
-            $table->unsignedDecimal("total");
+            $table->unsignedDecimal("total")->nullable();
 
             $table->unsignedBigInteger("tercero_id");
             $table->foreign("tercero_id")
