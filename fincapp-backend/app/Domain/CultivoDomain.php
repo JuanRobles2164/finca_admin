@@ -127,6 +127,16 @@ class CultivoDomain {
         return $isSuccess;
     }
 
+    /**
+     * Obtiene los materiales disponibles para procesar
+     *
+     * @return [type]
+     *
+     */
+    function listarMaterialesProcesables(){
+        return $this->materialRepository->getMaterialesParaProcesar();
+    }
+
 
     /**
      * Toma una cosecha. Indica cuánta procesó primero. Después, indica en qué material se convirtió luego del proceso y cuánto de ese material

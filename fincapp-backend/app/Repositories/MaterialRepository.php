@@ -17,4 +17,10 @@ class MaterialRepository extends BaseRepository {
             ->where('unidad', Constants::MATERIALES_UNIDADES_TOTALIDAD)
             ->get();
     }
+
+    public function getMaterialesParaProcesar(){
+        return $this->getModel()
+            ->where('requiere_procesar', true)
+            ->get();
+    }
 }

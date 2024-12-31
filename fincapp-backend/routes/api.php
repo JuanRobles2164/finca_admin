@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\ComprasController;
+use App\Http\Controllers\CultivosController;
 use App\Http\Controllers\FacturasController;
 use App\Http\Controllers\KardexController;
 use Illuminate\Http\Request;
@@ -27,7 +28,7 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 Route::prefix('materiales')->group(function () {
     Route::get('/', [MaterialController::class, 'get'])->name('materials.get');
     Route::get('find', [MaterialController::class, 'find'])->name('materials.find');
-    Route::post('find_by_params', [MaterialController::class, 'findByParams'])->name('materials.findByParams');
+    Route::post('find-by-params', [MaterialController::class, 'findByParams'])->name('materials.findByParams');
     Route::post('create', [MaterialController::class, 'create'])->name('materials.create');
     Route::put('update', [MaterialController::class, 'update'])->name('materials.update');
 });
@@ -35,7 +36,7 @@ Route::prefix('materiales')->group(function () {
 Route::prefix('terceros')->group(function () {
     Route::get('/', [TercerosController::class, 'get'])->name('terceros.get');
     Route::get('find', [TercerosController::class, 'find'])->name('terceros.find');
-    Route::post('find_by_params', [TercerosController::class, 'findByParams'])->name('terceros.findByParams');
+    Route::post('find-by-params', [TercerosController::class, 'findByParams'])->name('terceros.findByParams');
     Route::post('create', [TercerosController::class, 'create'])->name('terceros.create');
     Route::put('update', [TercerosController::class, 'update'])->name('terceros.update');
 });
@@ -53,6 +54,15 @@ Route::prefix('facturas')->group(function () {
 });
 
 Route::prefix('kardexes')->group(function () {
-    Route::get('listar_existencia_materiales', [KardexController::class, 'listarExistenciaMateriales'])->name('kardexes.listarExistenciaMateriales');
-    Route::put('editar_ultimo_kardex_por_material', [KardexController::class, 'editarUltimoKardexPorMaterial'])->name('kardexes.editarUltimoKardexPorMaterial');
+    Route::get('listar-existencia-materiales', [KardexController::class, 'listarExistenciaMateriales'])->name('kardexes.listarExistenciaMateriales');
+    Route::put('editar-ultimo-kardex-por-material', [KardexController::class, 'editarUltimoKardexPorMaterial'])->name('kardexes.editarUltimoKardexPorMaterial');
+});
+
+Route::prefix('cultivos')->group(function () {
+    Route::get('materiales-disponibles', [CultivosController::class, 'listarMaterialesDisponiblesParaCultivo'])->name('cultivos.listarMaterialesDisponiblesParaCultivo');
+    Route::post('agregar', [CultivosController::class, 'agregarCultivo'])->name('cultivos.agregarCultivo');
+    Route::post('consumir-insumos', [CultivosController::class, 'consumirInsumosPorCultivo'])->name('cultivos.consumirInsumosPorCultivo');
+    Route::post('recoger-cosecha', [CultivosController::class, 'recogerCosecha'])->name('cultivos.recogerCosecha');
+    Route::get('materiales-procesables', [CultivosController::class, 'listarMaterialesProcesables'])->name('cultivos.listarMaterialesProcesables');
+    Route::post('finalizar-cosecha', [CultivosController::class, 'finalizarCosecha'])->name('cultivos.finalizarCosecha');
 });

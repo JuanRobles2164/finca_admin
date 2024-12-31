@@ -18,6 +18,7 @@ return new class extends Migration
             $table->longText("descripcion")->nullable();
             $table->enum("unidad", Constants::MATERIALES_UNIDADES);
             $table->enum("tipo_material", Constants::MATERIALES_TIPO_MATERIAL);
+            $table->boolean("requiere_procesar")->default(false);
 
             $table->timestamps();
         });
