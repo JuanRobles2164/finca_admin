@@ -16,9 +16,9 @@ return new class extends Migration
             $table->id();
             $table->unsignedInteger("identificador")->index()->nullable();
             $table->smallInteger("edad");
-            $table->boolean("es_padron");
-            $table->enum("sexo", Constants::BIOMETRICOS_MATERIAL_SEXO);
-            $table->enum("adquisicion", Constants::BIOMETRICOS_MATERIAL_ADQUISICION);
+            $table->boolean("es_padron")->default(false);
+            $table->enum("sexo", Constants::BIOMETRICOS_MATERIAL_SEXO)->default("Indeterminado");
+            $table->enum("adquisicion", Constants::BIOMETRICOS_MATERIAL_ADQUISICION)->default("Cría");
 
             $table->unsignedBigInteger("padre_id")->nullable()->index();
             $table->foreign("padre_id")
