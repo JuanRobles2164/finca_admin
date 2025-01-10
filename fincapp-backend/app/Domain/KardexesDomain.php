@@ -29,4 +29,15 @@ class KardexesDomain extends BaseDomain {
         }
         return $is_success;
     }
+
+    function registrarMovimientoKardex($materialId, $cantidad, $tipoMovimiento = "Entra"){
+        $is_success = true;
+        try {
+            $this->repoInstance->registrarMovimientoKardex($materialId, $cantidad, $tipoMovimiento);
+        } catch (Exception $e) {
+            $is_success = false;
+        }
+
+        return $is_success;
+    }
 }

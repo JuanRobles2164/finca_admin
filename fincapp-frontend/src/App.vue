@@ -1,9 +1,5 @@
 <template>
-  <nav>
-    <router-link to="/">Home</router-link> |
-    <router-link to="/about">About</router-link>
-  </nav>
-  <router-view/>
+  <DefaultLayout/>
 </template>
 
 <style lang="scss">
@@ -28,3 +24,14 @@ nav {
   }
 }
 </style>
+
+<script lang="ts">
+import { defineComponent } from 'vue';
+import DefaultLayout from './layouts/DefaultLayout.vue';
+export default defineComponent({
+  name: "App",
+  components: {
+    DefaultLayout
+  }
+});
+</script>

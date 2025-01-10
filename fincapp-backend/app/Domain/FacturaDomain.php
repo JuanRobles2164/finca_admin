@@ -17,7 +17,7 @@ class FacturaDomain extends BaseDomain {
     function __construct()
     {
         $this->setRepoInstance(RepositoryFactory::make(FacturaRepository::class));
-        $this->kardexRepository = RepositoryFactory::make(RepositoryFactory::class);
+        $this->kardexRepository = RepositoryFactory::make(KardexRepository::class);
         $this->facturaItemKardexrepository = RepositoryFactory::make(FacturaItemKardexRepository::class);
     }
 

@@ -33,6 +33,6 @@ class MaterialController extends Controller
     }
 
     function update(Request $request){
-        return json_encode($this->materialDomain->update($request->object, $request->data));
+        return json_encode($this->materialDomain->update($request->object_id, $request->data));
     }
 }

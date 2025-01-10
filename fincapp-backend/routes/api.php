@@ -27,16 +27,16 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 
 Route::prefix('materiales')->group(function () {
     Route::get('/', [MaterialController::class, 'get'])->name('materials.get');
-    Route::get('find', [MaterialController::class, 'find'])->name('materials.find');
-    Route::post('find-by-params', [MaterialController::class, 'findByParams'])->name('materials.findByParams');
+    Route::get('find/{id}', [MaterialController::class, 'find'])->name('materials.find');
+    Route::get('find-by-params', [MaterialController::class, 'findByParams'])->name('materials.findByParams');
     Route::post('create', [MaterialController::class, 'create'])->name('materials.create');
     Route::put('update', [MaterialController::class, 'update'])->name('materials.update');
 });
 
 Route::prefix('terceros')->group(function () {
     Route::get('/', [TercerosController::class, 'get'])->name('terceros.get');
-    Route::get('find', [TercerosController::class, 'find'])->name('terceros.find');
-    Route::post('find-by-params', [TercerosController::class, 'findByParams'])->name('terceros.findByParams');
+    Route::get('find/{id}', [TercerosController::class, 'find'])->name('terceros.find');
+    Route::get('find-by-params', [TercerosController::class, 'findByParams'])->name('terceros.findByParams');
     Route::post('create', [TercerosController::class, 'create'])->name('terceros.create');
     Route::put('update', [TercerosController::class, 'update'])->name('terceros.update');
 });
@@ -44,18 +44,19 @@ Route::prefix('terceros')->group(function () {
 Route::prefix('compras')->group(function () {
     Route::get('/', [ComprasController::class, 'get'])->name('compras.get');
     Route::post('/create', [ComprasController::class, 'create'])->name('compras.create');
-    Route::get('/{id}', [ComprasController::class, 'find'])->name('compras.find');
+    Route::get('find/{id}', [ComprasController::class, 'find'])->name('compras.find');
 });
 
 Route::prefix('facturas')->group(function () {
     Route::get('/', [FacturasController::class, 'get'])->name('facturas.get');
     Route::post('/create', [FacturasController::class, 'create'])->name('facturas.create');
-    Route::get('/{id}', [FacturasController::class, 'find'])->name('facturas.find');
+    Route::get('find/{id}', [FacturasController::class, 'find'])->name('facturas.find');
 });
 
 Route::prefix('kardexes')->group(function () {
     Route::get('listar-existencia-materiales', [KardexController::class, 'listarExistenciaMateriales'])->name('kardexes.listarExistenciaMateriales');
     Route::put('editar-ultimo-kardex-por-material', [KardexController::class, 'editarUltimoKardexPorMaterial'])->name('kardexes.editarUltimoKardexPorMaterial');
+    Route::post("registrar-movimiento-kardex", [KardexController::class, 'registrarMovimientoKardex'])->name('kardexes.registrarMovimientoKardex');
 });
 
 Route::prefix('cultivos')->group(function () {

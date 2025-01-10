@@ -34,4 +34,8 @@ class KardexController extends Controller
     function editarUltimoKardexPorMaterial(Request $request){
         return json_encode($this->kardexesDomain->editarUltimoMovimientoKardexPorMaterial($request->material_id, $request->nuevo_total_inventario));
     }
+
+    function registrarMovimientoKardex(Request $request){
+        return json_encode($this->kardexesDomain->registrarMovimientoKardex($request->material_id, $request->cantidad, $request->tipo_movimiento));
+    }
 }
