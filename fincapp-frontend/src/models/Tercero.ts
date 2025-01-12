@@ -3,6 +3,6 @@ export interface Tercero {
     nombre: string;
     nit?: string | null;
     contacto?: string | null;
-    createdAt: string;
-    updatedAt: string;
+    createdAt?: string;
+    updatedAt?: string;
 }

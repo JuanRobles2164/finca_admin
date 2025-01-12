@@ -25,14 +25,22 @@
                             </div>
                             <div class="mb-4">
                                 <label for="unidad" class="block text-sm font-medium text-gray-700">Unidad</label>
-                                <input type="text" v-model="material.data.unidad" required
-                                    class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm" />
+
+                                <select id="unidad" v-model="material.data.unidad" required
+                                    class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500">
+                                    <option selected>Escoja una unidad</option>
+                                    <option v-for="u in unidades" :key="u" :value="u">{{ u }}</option>
+                                </select>
                             </div>
                             <div class="mb-4">
                                 <label for="tipo_material" class="block text-sm font-medium text-gray-700">Tipo de
                                     Material</label>
-                                <input type="text" v-model="material.data.tipo_material" required
-                                    class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm" />
+
+                                <select id="tipo_material" v-model="material.data.tipo_material" required
+                                    class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500">
+                                    <option selected>Escoja un tipo</option>
+                                    <option v-for="t in tipos_material" :key="t" :value="t">{{ t }}</option>
+                                </select>
                             </div>
                             <div class="mb-4">
                                 <label for="requiere_procesar" class="block text-sm font-medium text-gray-700">Requiere
@@ -58,13 +66,14 @@ import { defineComponent, ref } from 'vue';
 import { useMaterialStore } from '@/store/MaterialStore';
 import { CreateMaterialRequest } from '@/models/request/material/CreateMaterialRequest';
 import { Material } from '@/models/Material';
-import { useNotificationStore } from '@/store/components/NotificationStore';
 
 export default defineComponent({
     name: 'CreateMaterialForm',
     setup() {
         const store = useMaterialStore();
         const isOpen = ref(false);
+        const unidades = store.unidades;
+        const tipos_material = store.tipos_material;
         let materialParameter: Material = {
             id: 0,
             nombre: '',
@@ -80,11 +89,18 @@ export default defineComponent({
 
         const openModal = () => {
             isOpen.value = true;
-            showNotification("success", "componente creado con éxito", "FUNCIONAAAAAAAAA!");
         };
 
         const closeModal = () => {
             isOpen.value = false;
+            materialParameter = {
+                id: 0,
+                nombre: '',
+                descripcion: '',
+                unidad: '',
+                tipo_material: '',
+                requiere_procesar: false,
+            }
         };
 
         const handleSubmit = async () => {
@@ -92,20 +108,17 @@ export default defineComponent({
             closeModal();
         };
 
-        const notiStore = useNotificationStore(); 
-        const showNotification = (type: string, title: string, message: string) => { notiStore.addNotification(type, title, message); };
         return {
             isOpen,
             material,
+            unidades,
+            tipos_material,
             openModal,
             closeModal,
-            handleSubmit,
-            showNotification
+            handleSubmit
         };
     },
 });
 </script>
 
-<style scoped>
-
-</style>
+<style scoped></style>

@@ -7,7 +7,7 @@ import { UpdateMaterialRequest } from '@/models/request/material/UpdateMaterialR
 export default class MaterialService extends BaseService {
 
     constructor() {
-        super(CONSTANTS.BASE_API_URL, CONSTANTS.BASE_API_GROUP_MATERIAL);
+        super(CONSTANTS.BASE_API_URL, CONSTANTS.BASE_API_GROUP.MATERIAL);
     }
 
     async getMateriales(): Promise<Material[]> {
@@ -15,11 +15,16 @@ export default class MaterialService extends BaseService {
     }
 
     async createMaterial(materialRequest: CreateMaterialRequest): Promise<Material> {
-        return await this.post<Material>('create', materialRequest);
+        const response = await this.post<Material>('create', materialRequest);
+        this.successOperationNotification();
+        return response;
     }
 
     async updateMaterial(materialUpdate: UpdateMaterialRequest) : Promise <Material> {
-        return await this.post<Material>('update', materialUpdate)
+        const response = await this.put<Material>('update', materialUpdate)
+        this.successOperationNotification();
+        console.log(response);
+        return response;
     }
 
     async findMaterial(materialId : number) : Promise<Material> {

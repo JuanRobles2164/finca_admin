@@ -32,6 +32,6 @@ class TercerosController extends Controller
     }
 
     function update(Request $request){
-        return json_encode($this->terceroDomain->update($request->object, $request->data));
+        return json_encode($this->terceroDomain->update($request->object_id, $request->data));
     }
 }

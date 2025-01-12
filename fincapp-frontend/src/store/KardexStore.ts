@@ -1,12 +1,13 @@
-import { CONSTANTS } from "@/common/Constants";
 import { PostRegistrarMovimientoKardex } from "@/models/request/kardex/PostRegistrarMovimientoKardexRequest";
 import { KardexMaterial } from "@/models/response/kardex/KardexMaterial";
 import KardexService from "@/services/KardexService";
 import { defineStore } from "pinia";
 
+/* eslint-disable */
+
 const kardexService = new KardexService();
 
-export const KardexStore = defineStore('kardex', {
+export const useKardexStore = defineStore('kardex', {
     state: () => ({
         kardexes: [] as KardexMaterial[],
         loading: false,
@@ -37,6 +38,7 @@ export const KardexStore = defineStore('kardex', {
             };
             try {
                 await kardexService.postRegistrarMovimientoKardex(requestParams);
+                await this.fetchExistenciaMateriales();
             } catch (error) {
                 this.error = 'Error al registrar movimiento de kardex';
                 console.error(error);

@@ -8,7 +8,9 @@ export default class BaseService {
   protected api: AxiosInstance;
   protected baseApiGroup : string;
 
-  protected useNotificationStore = useNotificationStore();
+  protected getUseNotificationStore(){
+    return useNotificationStore();
+  }
 
   constructor(baseURL: string, baseApiGroup : string) {
     this.baseApiGroup = baseApiGroup;
@@ -48,16 +50,16 @@ export default class BaseService {
     return response.data;
   }
 
-  protected successOperationNotification(message : string = CONSTANTS.NOTIFICACIONES_MENSAJES_SUCCESS){
-    this.useNotificationStore.addNotification("success", "Operación exitosa", message);
+  protected successOperationNotification(message : string = CONSTANTS.NOTIFICACIONES_MENSAJES.SUCCESS){
+    this.getUseNotificationStore().addNotification("success", "Operación exitosa", message);
   }
 
-  protected dangerOperationNotification(message : string = CONSTANTS.NOTIFICACIONES_MENSAJES_FAIL){
-    this.useNotificationStore.addNotification("danger", "Operación fallida", message);
+  protected dangerOperationNotification(message : string = CONSTANTS.NOTIFICACIONES_MENSAJES.FAIL){
+    this.getUseNotificationStore().addNotification("danger", "Operación fallida", message);
   }
 
-  protected warningOperationNotification(message : string = CONSTANTS.NOTIFICACIONES_MENSAJES_WARNING){
-    this.useNotificationStore.addNotification("warning", "Operación exitosa", message);
+  protected warningOperationNotification(message : string = CONSTANTS.NOTIFICACIONES_MENSAJES.WARNING){
+    this.getUseNotificationStore().addNotification("warning", "Operación exitosa", message);
   }
 
   //Base methods for almost each repository

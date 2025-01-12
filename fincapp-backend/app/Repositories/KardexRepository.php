@@ -3,6 +3,7 @@
 namespace App\Repositories;
 
 use App\Models\Kardex;
+use App\Models\Material;
 use Illuminate\Support\Facades\DB;
 
 class KardexRepository extends BaseRepository
@@ -46,12 +47,19 @@ class KardexRepository extends BaseRepository
 
     function listarExistenciaMateriales()
     {
-        return Kardex::select('kardex.material_id', 'materiales.nombre as material', 'materiales.tipo_material', 'kardex.total_inventario')
-            ->join('materiales', 'kardex.material_id', '=', 'materiales.id')
-            ->whereIn('kardex.id', function ($query) {
-                $query->select(DB::raw('MAX(id)'))
-                    ->from('kardex')
-                    ->groupBy('material_id');
+        return Material::select(
+            'materiales.id as material_id',
+            'materiales.nombre as material',
+            'materiales.tipo_material',
+            DB::raw('COALESCE(kardexes.total_inventario, 0) as total_inventario')
+        )
+            ->leftJoin('kardexes', function ($join) {
+                $join->on('kardexes.material_id', '=', 'materiales.id')
+                    ->whereIn('kardexes.id', function ($query) {
+                        $query->select(DB::raw('MAX(id)'))
+                            ->from('kardexes')
+                            ->groupBy('material_id');
+                    });
             })
             ->get();
     }

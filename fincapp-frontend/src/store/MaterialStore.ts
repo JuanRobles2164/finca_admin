@@ -3,6 +3,7 @@ import MaterialService from '@/services/MaterialService';
 import { Material } from '@/models/Material';
 import { CreateMaterialRequest } from '@/models/request/material/CreateMaterialRequest';
 import { UpdateMaterialRequest } from '@/models/request/material/UpdateMaterialRequest';
+import { CONSTANTS } from '@/common/Constants';
 
 const materialService = new MaterialService();
 
@@ -12,6 +13,8 @@ export const useMaterialStore = defineStore('material', {
         loading: false,
         error: null as string | null,
         material : {} as Material,
+        unidades : CONSTANTS.MATERIALES.UNIDADES,
+        tipos_material : CONSTANTS.MATERIALES.TIPOS_MATERIAL
     }),
 
     actions: {
@@ -31,9 +34,7 @@ export const useMaterialStore = defineStore('material', {
         async createMaterial(material: CreateMaterialRequest) {
             this.loading = true;
             this.error = null;
-            this.materiales = [] as Material[];
             try {
-
                 const newMaterial = await materialService.createMaterial(material);
                 this.materiales.push(newMaterial);
             } catch (error) {
@@ -44,15 +45,18 @@ export const useMaterialStore = defineStore('material', {
             }
         },
 
-        async updateMaterial(material: Material, materialId: number) {
+        async updateMaterial(materialUpdateRequest: UpdateMaterialRequest) {
             this.loading = true;
             this.error = null;
             try {
-                const materialUpdateRequest: UpdateMaterialRequest = {
-                    object_id: materialId,
-                    data: material
-                };
+
                 await materialService.updateMaterial(materialUpdateRequest);
+
+                const index = this.materiales.findIndex((m) => m.id === materialUpdateRequest.object_id);
+                console.log(index);
+                if (index !== -1) {
+                    this.materiales[index] = { ...this.materiales[index], ...materialUpdateRequest.data };
+                }
             } catch (error) {
                 this.error = 'Error al actualizar el material';
                 console.error(error);

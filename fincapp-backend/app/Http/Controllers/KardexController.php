@@ -24,7 +24,7 @@ class KardexController extends Controller
     }
 
     function update(Request $request){
-        return json_encode($this->kardexesDomain->update($request->object, $request->data));
+        return json_encode($this->kardexesDomain->update($request->object_id, $request->data));
     }
 
     function listarExistenciaMateriales(){

@@ -2,6 +2,7 @@
     <NotificationAlert />
     <DefaultHeader />
     <DefaultSidebar>
+        <router-view />
         <DefaultFooter />
     </DefaultSidebar>
 </template>
@@ -27,6 +28,6 @@ export default defineComponent({
     }
 });
 </script>
-<style lang="">
+<style>
 
 </style>
