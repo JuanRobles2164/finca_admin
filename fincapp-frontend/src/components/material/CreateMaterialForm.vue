@@ -11,7 +11,7 @@
                         <button @click="closeModal" class="text-gray-500 hover:text-gray-700">&times;</button>
                     </div>
                     <div>
-                        <form @submit.prevent="handleSubmit">
+                        <form>
                             <div class="mb-4">°
                                 <label for="nombre" class="block text-sm font-medium text-gray-700">Nombre</label>
                                 <input type="text" v-model="material.data.nombre" required
@@ -48,7 +48,7 @@
                                 <input type="checkbox" v-model="material.data.requiere_procesar" class="mt-1" />
                             </div>
                             <div class="flex justify-end gap-2">
-                                <button type="submit"
+                                <button @click="handleSubmit"
                                     class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">Crear</button>
                                 <button @click="closeModal" type="button"
                                     class="bg-gray-500 text-white px-4 py-2 rounded hover:bg-gray-600">Cancelar</button>
