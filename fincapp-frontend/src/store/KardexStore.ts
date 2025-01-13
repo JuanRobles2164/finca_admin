@@ -18,7 +18,6 @@ export const useKardexStore = defineStore('kardex', {
         async fetchExistenciaMateriales() {
             this.loading = true;
             this.error = null;
-            this.kardexes = [] as KardexMaterial[];
             try {
                 this.kardexes = await kardexService.getExistenciaMateriales();
             } catch (error) {

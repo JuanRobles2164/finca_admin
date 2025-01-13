@@ -4,6 +4,7 @@ import MaterialesView from '@/views/MaterialesView.vue'
 import DefaultLayout from '@/layouts/DefaultLayout.vue';
 import TercerosView from '@/views/TercerosView.vue';
 import KardexesView from '@/views/KardexesView.vue';
+import FacturasView from '@/views/FacturasView.vue';
 
 const routes: Array<RouteRecordRaw> = [
   {
@@ -29,6 +30,11 @@ const routes: Array<RouteRecordRaw> = [
         path: 'kardexes',
         name: 'kardexes',
         component: KardexesView,
+      },
+      {
+        path: 'facturas',
+        name: 'facturas',
+        component: FacturasView,
       },
     ],
   },

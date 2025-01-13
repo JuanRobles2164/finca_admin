@@ -41,7 +41,7 @@ class FacturaDomain extends BaseDomain {
         $estado = $pagada ? Constants::FACTURA_ESTADOS_PAGADA : Constants::FACTURA_ESTADOS_DEBE;
 
         $facturaParams = [
-            'fecha_compra' => $fechaCompra,
+            'fecha_venta' => $fechaVenta,
             'tercero_id' => $terceroId,
             'numero' => Carbon::now()->timestamp,
             'fecha_pago' => $fechaPago,

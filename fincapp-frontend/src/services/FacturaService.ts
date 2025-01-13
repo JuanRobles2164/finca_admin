@@ -8,11 +8,11 @@ export default class FacturaService extends BaseService {
         super(CONSTANTS.BASE_API_URL, CONSTANTS.BASE_API_GROUP.FACTURA);
     }
 
-    async getExistenciaMateriales() : Promise<Factura[]>{
+    async getExistenciaFacturas() : Promise<Factura[]>{
         return await this.get<Factura[]>('/', {});
     }
 
-    async updateUltimoKardexPorMaterial(createFacturaRequest : CreateFacturaRequest) : Promise<Factura>{
-        return await this.put<Factura>('create', createFacturaRequest);
+    async postRegistrarVenta(createFacturaRequest : CreateFacturaRequest) : Promise<Factura>{
+        return await this.post<Factura>('create', createFacturaRequest);
     }
 }

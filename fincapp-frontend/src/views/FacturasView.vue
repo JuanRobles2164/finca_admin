@@ -1,13 +1,22 @@
 <template>
-    <div>
-        
-    </div>
+    <CreateFacturaForm />
+    <FetchFacturaList/>
 </template>
-<script>
-export default {
-    
-}
+
+<script lang="ts">
+import CreateFacturaForm from '@/components/factura/CreateFacturaForm.vue';
+import FetchFacturaList from '@/components/factura/FetchFacturaList.vue';
+import { defineComponent } from 'vue';
+
+export default defineComponent({
+    name:'FacturasView',
+    components: {
+        FetchFacturaList,
+        CreateFacturaForm
+    }
+})
 </script>
-<style lang="">
+
+<style lang="css" scoped>
     
 </style>

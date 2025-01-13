@@ -1,4 +1,4 @@
-interface MaterialesVenta {
+export interface MaterialesVenta {
     material_id: number,
     cantidad: number,
     valor_unitario: number

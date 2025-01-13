@@ -26,8 +26,7 @@
             class="w-full border-gray-300 rounded p-2"
             required
           >
-            <option value="" disabled>Seleccione el tipo de movimiento</option>
-            <option value="Entra">Entra</option>
+            <option value="Entra" selected>Entra</option>
             <option value="Sale">Sale</option>
           </select>
         </div>
@@ -44,7 +43,6 @@
           />
         </div>
   
-        <!-- Botones -->
         <div class="flex justify-end space-x-2">
           <button
             type="submit"
@@ -77,7 +75,7 @@ import { useNotificationStore } from "@/store/components/NotificationStore";
   
   const cantidad = ref(0);
   const selectedMaterialId = ref(null);
-  const tipoMovimiento = ref("");
+  const tipoMovimiento = ref("Entra");
   
   onMounted(() => {
     materialStore.fetchMateriales();

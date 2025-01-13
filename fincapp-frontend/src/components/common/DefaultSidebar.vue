@@ -89,17 +89,16 @@ const menuItems = [
       { title: 'Index', link: "kardexes" },
     ]
   },
-  /*{
-    title: 'Compras',
-    icon: ShoppingCart,
-    subItems: [
-      { title: 'Consultar' },
-      { title: 'Crear' }
-    ]
-  },
   {
     title: 'Facturas',
     icon: FileText,
+    subItems: [
+      { title: 'Index', link: "facturas" },
+    ]
+  },
+  /*{
+    title: 'Compras',
+    icon: ShoppingCart,
     subItems: [
       { title: 'Consultar' },
       { title: 'Crear' }

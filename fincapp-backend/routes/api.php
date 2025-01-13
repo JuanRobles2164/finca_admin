@@ -49,7 +49,7 @@ Route::prefix('compras')->group(function () {
 
 Route::prefix('facturas')->group(function () {
     Route::get('/', [FacturasController::class, 'get'])->name('facturas.get');
-    Route::post('/create', [FacturasController::class, 'create'])->name('facturas.create');
+    Route::post('/create', [FacturasController::class, 'registrarVenta'])->name('facturas.create');
     Route::get('find/{id}', [FacturasController::class, 'find'])->name('facturas.find');
 });
 
