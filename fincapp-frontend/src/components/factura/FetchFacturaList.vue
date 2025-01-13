@@ -28,7 +28,6 @@
               <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Fecha Pago</th>
               <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Fecha Venta</th>
               <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Total</th>
-              <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Acciones</th>
             </tr>
           </thead>
           <tbody class="bg-white divide-y divide-gray-200">
@@ -43,12 +42,12 @@
                   SIN PAGAR
                 </span>
               </td>
-              <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{ formatDate(factura.fecha_venta) }}</td>
-              <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900 font-medium">{{ formatCurrency(factura.total?? 0) }}</td>
-              <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
-                <button @click="verDetalles(factura.id)" class="text-indigo-600 hover:text-indigo-900 mr-2">Ver detalles</button>
-                <button @click="editarFactura(factura.id)" class="text-green-600 hover:text-green-900">Editar</button>
+              <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900 font-medium">
+                <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full text-orange-600 bg-orange-100">
+                    {{ formatDate(factura.fecha_venta) }}
+                </span>
               </td>
+              <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900 font-medium">{{ formatCurrency(factura.total?? 0) }}</td>
             </tr>
           </tbody>
         </table>

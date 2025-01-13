@@ -101,10 +101,12 @@ import { useMaterialStore } from "@/store/MaterialStore";
 import { useTerceroStore } from "@/store/TerceroStore";
 import { CreateFacturaRequest, MaterialesVenta } from "@/models/request/factura/CreateFacturaRequest";
 import Multiselect from "vue-multiselect";
+import { useNotificationStore } from "@/store/components/NotificationStore";
 
 const facturaStore = useFacturaStore();
 const materialStore = useMaterialStore();
 const terceroStore = useTerceroStore();
+const notificationStore = useNotificationStore();
 
 const createFacturaRequest = reactive<CreateFacturaRequest>({
     materiales_venta: [] as MaterialesVenta[],
@@ -112,6 +114,13 @@ const createFacturaRequest = reactive<CreateFacturaRequest>({
     fecha_venta: "",
     pagada: false,
 });
+
+const resetCreateFacturaRequest = () => {
+    createFacturaRequest.materiales_venta = [];
+    createFacturaRequest.tercero_id = 0;
+    createFacturaRequest.fecha_venta = "";
+    createFacturaRequest.pagada = false;
+};
 
 const addMaterialVenta = () => {
     createFacturaRequest.materiales_venta.push({
@@ -131,6 +140,8 @@ const submitFactura = async () => {
         el.material_id = el.material_obj.id;
     });
     await facturaStore.registrarVenta(createFacturaRequest);
+    notificationStore.addNotification("success", "Factura creada", "Se creó la factura exitosamente");
+    resetCreateFacturaRequest();
 };
 
 const labelForSelectMaterial = (obj : any) => {
