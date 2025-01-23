@@ -19,10 +19,15 @@ class FacturasController extends Controller
     }
 
     function registrarVenta(Request $request){
-        return json_encode($this->facturaDomain->registrarVenta($request->materiales_venta, $request->tercero_id, $request->pagada, $request->fecha_venta));
+        $materialesVenta = json_decode($request->input('materiales_venta'), true);
+        return json_encode($this->facturaDomain->registrarVenta($materialesVenta, $request->tercero_id, $request->file('evidencias'), $request->pagada, $request->fecha_venta));
     }
 
     function find(Request $request){
         return json_encode($this->facturaDomain->find($request->id));
+    }
+
+    function getFacturaDetails(Request $request){
+        return json_encode($this->facturaDomain->getFacturaDetails($request->factura_id));
     }
 }

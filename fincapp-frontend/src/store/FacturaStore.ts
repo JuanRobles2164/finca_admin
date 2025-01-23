@@ -1,5 +1,5 @@
 import { Factura } from "@/models/Factura";
-import { CreateFacturaRequest } from "@/models/request/factura/CreateFacturaRequest";
+import { FacturaData } from "@/models/pdf/FacturaData";
 import FacturaService from "@/services/FacturaService";
 import { defineStore } from "pinia";
 
@@ -11,6 +11,7 @@ export const useFacturaStore = defineStore('factura', {
         loading: false,
         error: null as string | null,
         factura: {} as Factura,
+        factura_details: {} as FacturaData
     }),
     actions: {
         async fetchFacturas() {
@@ -25,11 +26,11 @@ export const useFacturaStore = defineStore('factura', {
                 this.loading = false;
             }
         },
-        async registrarVenta(createFacturaRequest: CreateFacturaRequest) {
+        async registrarVenta(formData: FormData) {
             this.loading = true;
             this.error = null;
             try {
-                await facturaService.postRegistrarVenta(createFacturaRequest);
+                await facturaService.postRegistrarVenta(formData);
                 await this.fetchFacturas();
             } catch (error) {
                 this.error = 'Error al registrar la factura';
@@ -37,6 +38,19 @@ export const useFacturaStore = defineStore('factura', {
             } finally {
                 this.loading = false;
             }
-        }
+        },
+        async facturaDetails(factura_id: number){
+            this.loading = true;
+            this.error = null;
+            try {
+                debugger;
+                this.factura_details = await facturaService.getFacturaDetails(factura_id);
+            } catch (error) {
+                this.error = "Error al consultar los detalles";
+                console.log(error);
+            } finally {
+                this.loading = false;
+            }
+        },
     }
 })

@@ -10,4 +10,8 @@ class EvidenciaRepository extends BaseRepository {
     {
         return new Evidencia();
     }
+
+    public function getEvidenciaByFacturaId($facturaId){
+        return $this->getModel()->where('factura_id', $facturaId)->get();
+    }
 }

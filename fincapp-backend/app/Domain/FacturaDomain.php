@@ -8,6 +8,7 @@ use App\Repositories\Factory\RepositoryFactory;
 use App\Repositories\FacturaItemKardexRepository;
 use App\Repositories\FacturaRepository;
 use App\Repositories\KardexRepository;
+use App\Repositories\TerceroRepository;
 use Carbon\Carbon;
 
 class FacturaDomain extends BaseDomain {
@@ -15,6 +16,7 @@ class FacturaDomain extends BaseDomain {
     private KardexRepository $kardexRepository;
     private FacturaItemKardexRepository $facturaItemKardexrepository;
     private EvidenciaRepository $evidenciaRepository;
+    private TerceroRepository $terceroRepository;
 
     function __construct()
     {
@@ -22,6 +24,7 @@ class FacturaDomain extends BaseDomain {
         $this->kardexRepository = RepositoryFactory::make(KardexRepository::class);
         $this->facturaItemKardexrepository = RepositoryFactory::make(FacturaItemKardexRepository::class);
         $this->evidenciaRepository = RepositoryFactory::make(EvidenciaRepository::class);
+        $this->terceroRepository = RepositoryFactory::make(TerceroRepository::class);
     }
 
     /**
@@ -38,6 +41,9 @@ class FacturaDomain extends BaseDomain {
     function registrarVenta($materialesVenta, $terceroId, $evidencias, $pagada = true, $fechaVenta = null){
         if($fechaVenta == null){
             $fechaVenta = Carbon::now();
+        }else{
+            $fechaLimpia = str_replace('"', '', $fechaVenta);
+            $fechaVenta = Carbon::parse($fechaLimpia);
         }
 
         $fechaPago = $pagada ? Carbon::now() : null;
@@ -92,5 +98,14 @@ class FacturaDomain extends BaseDomain {
 
 
         return $facturaObj;
+    }
+
+    function getFacturaDetails($facturaId){
+
+        $factura = $this->repoInstance->find($facturaId);
+        $venta_materiales = $this->facturaItemKardexrepository->getItemsByFacturaId($facturaId);
+        $cliente = $this->terceroRepository->find($factura->tercero_id);
+        $evidencia = $this->evidenciaRepository->getEvidenciaByFacturaId($facturaId);
+        return [$factura, $venta_materiales, $cliente, $evidencia];
     }
 }

@@ -9,5 +9,6 @@ export interface CreateFacturaRequest {
     materiales_venta : MaterialesVenta[],
     tercero_id: number,
     pagada? : boolean,
-    fecha_venta: string
+    fecha_venta: string,
+    evidencias?: File[]
 }

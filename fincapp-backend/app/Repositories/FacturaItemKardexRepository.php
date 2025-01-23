@@ -10,4 +10,8 @@ class FacturaItemKardexRepository extends BaseRepository {
     {
         return new FacturaItemKardex();
     }
+
+    public function getItemsByFacturaId($facturaId){
+        return $this->getModel()->where('factura_id', $facturaId)->get();
+    }
 }

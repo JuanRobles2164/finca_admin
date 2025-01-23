@@ -1,7 +1,7 @@
 import { CONSTANTS } from "@/common/Constants";
 import BaseService from "./BaseService";
 import { Factura } from "@/models/Factura";
-import { CreateFacturaRequest } from "@/models/request/factura/CreateFacturaRequest";
+import { FacturaData } from "@/models/pdf/FacturaData";
 
 export default class FacturaService extends BaseService {
     constructor() {
@@ -12,7 +12,11 @@ export default class FacturaService extends BaseService {
         return await this.get<Factura[]>('/', {});
     }
 
-    async postRegistrarVenta(createFacturaRequest : CreateFacturaRequest) : Promise<Factura>{
-        return await this.post<Factura>('create', createFacturaRequest);
+    async postRegistrarVenta(formData: FormData): Promise<Factura> {
+        return await this.create<Factura>('create', formData);
+    }
+
+    async getFacturaDetails(factura_id: number) : Promise<FacturaData>{
+        return await this.get<FacturaData>(`details/${factura_id}`);
     }
 }
