@@ -3,6 +3,7 @@
 namespace App\Domain;
 
 use App\Common\Constants;
+use App\Repositories\EvidenciaRepository;
 use App\Repositories\Factory\RepositoryFactory;
 use App\Repositories\FacturaItemKardexRepository;
 use App\Repositories\FacturaRepository;
@@ -13,12 +14,14 @@ class FacturaDomain extends BaseDomain {
 
     private KardexRepository $kardexRepository;
     private FacturaItemKardexRepository $facturaItemKardexrepository;
+    private EvidenciaRepository $evidenciaRepository;
 
     function __construct()
     {
         $this->setRepoInstance(RepositoryFactory::make(FacturaRepository::class));
         $this->kardexRepository = RepositoryFactory::make(KardexRepository::class);
         $this->facturaItemKardexrepository = RepositoryFactory::make(FacturaItemKardexRepository::class);
+        $this->evidenciaRepository = RepositoryFactory::make(EvidenciaRepository::class);
     }
 
     /**
@@ -32,9 +35,9 @@ class FacturaDomain extends BaseDomain {
      * @return object
      *
      */
-    function registrarVenta($materialesVenta, $terceroId, $pagada = true, $fechaVenta = null){
+    function registrarVenta($materialesVenta, $terceroId, $evidencias, $pagada = true, $fechaVenta = null){
         if($fechaVenta == null){
-            $fechaCompra = Carbon::now();
+            $fechaVenta = Carbon::now();
         }
 
         $fechaPago = $pagada ? Carbon::now() : null;
@@ -73,6 +76,20 @@ class FacturaDomain extends BaseDomain {
 
         $facturaObj->total = $total;
         $facturaObj->save();
+
+        //Procesar evidencia, si existe
+        if (is_array($evidencias) && count($evidencias) > 0) {
+            foreach ($evidencias as $archivo) {
+                // Guardar el archivo en la carpeta 'evidencias' dentro de 'public'
+                $ruta = $archivo->store('evidencias', 'public');
+                $evidenciaParams = [
+                    'path' => $ruta,
+                    'factura_id' => $facturaObj->id
+                ];
+                $this->evidenciaRepository->create($evidenciaParams);
+            }
+        }
+
 
         return $facturaObj;
     }

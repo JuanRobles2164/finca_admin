@@ -11,7 +11,6 @@ use App\Repositories\HistoricoMaterialRepository;
 use App\Repositories\KardexRepository;
 use App\Repositories\MaterialRepository;
 use Exception;
-use PHPUnit\TextUI\Configuration\Constant;
 
 class CultivoDomain {
     private KardexRepository $kardexRepository;
