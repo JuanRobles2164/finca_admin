@@ -1,5 +1,5 @@
 <template>
-    <div class="bg-white rounded-lg shadow-lg p-8 max-w-4xl mx-auto">
+    <div class="bg-white rounded-lg shadow-lg p-8 max-w-8xl mx-auto">
         <h2 class="text-2xl font-bold mb-6 text-gray-800">Registrar Factura</h2>
 
         <form @submit.prevent="submitFactura" class="space-y-6">
@@ -20,7 +20,8 @@
                         </div>
 
                         <div>
-                            <label for="fecha" class="block text-sm font-medium text-gray-700 mb-1">Fecha de Venta</label>
+                            <label for="fecha" class="block text-sm font-medium text-gray-700 mb-1">Fecha de
+                                Venta</label>
                             <input type="date" id="fecha" v-model="createFacturaRequest.fecha_venta"
                                 class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50" />
                         </div>
@@ -38,14 +39,8 @@
                             <div v-for="(materialVenta, index) in createFacturaRequest.materiales_venta" :key="index"
                                 class="bg-gray-50 p-4 rounded-md">
                                 <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
-                                    <multiselect 
-                                    v-model="materialVenta.material_obj" 
-                                    :options="materiales"
-                                    :searchable="true"
-                                    :custom-label="labelForSelectMaterial"
-                                    track-by="id"
-                                    label="nombre"
-                                    :close-on-select="true" />
+                                    <CustomSelect v-model="materialVenta.material_obj" :options="materiales"
+                                        :get-label="labelForSelectMaterial" placeholder="Buscar material" />
 
                                     <div>
                                         <label class="block text-sm font-medium text-gray-700 mb-1">Cantidad</label>
@@ -55,7 +50,8 @@
                                     </div>
 
                                     <div>
-                                        <label class="block text-sm font-medium text-gray-700 mb-1">Valor Unitario</label>
+                                        <label class="block text-sm font-medium text-gray-700 mb-1">Valor
+                                            Unitario</label>
                                         <input type="number" v-model="materialVenta.valor_unitario"
                                             class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
                                             min="0" step="0.01" />
@@ -78,10 +74,11 @@
                 <div>
                     <h3 class="text-lg font-medium text-gray-900 mb-4">Evidencias</h3>
 
-                    <div class="relative w-full h-64 bg-gray-100 rounded-lg flex items-center justify-center overflow-hidden">
+                    <div
+                        class="relative w-full h-64 bg-gray-100 rounded-lg flex items-center justify-center overflow-hidden">
                         <template v-if="createFacturaRequest.evidencias.length">
-                            <img :src="evidenciaPreview" class="object-cover w-full h-full transition-opacity duration-300"
-                                alt="Evidencia">
+                            <img :src="evidenciaPreview"
+                                class="object-cover w-full h-full transition-opacity duration-300" alt="Evidencia">
                         </template>
                         <p v-else class="text-gray-500">No hay evidencias</p>
                     </div>
@@ -135,6 +132,8 @@ import { useMaterialStore } from "@/store/MaterialStore";
 import { useTerceroStore } from "@/store/TerceroStore";
 import { CreateFacturaRequest, MaterialesVenta } from "@/models/request/factura/CreateFacturaRequest";
 import Multiselect from "vue-multiselect";
+import CustomSelect from "../forms/CustomSelect.vue";
+
 import { useNotificationStore } from "@/store/components/NotificationStore";
 
 const facturaStore = useFacturaStore();
@@ -230,8 +229,12 @@ const submitFactura = async () => {
 };
 
 
-const labelForSelectMaterial = (obj : any) => {
+const labelForSelectMaterial = (obj: any) => {
     return `${obj.nombre} - ${obj.unidad}`;
+}
+
+const handleSelect = (obj: any) => {
+    console.log(obj);
 }
 
 materialStore.fetchMateriales();
