@@ -51,7 +51,7 @@ Route::prefix('facturas')->group(function () {
     Route::get('/', [FacturasController::class, 'get'])->name('facturas.get');
     Route::post('/create', [FacturasController::class, 'registrarVenta'])->name('facturas.create');
     Route::get('find/{id}', [FacturasController::class, 'find'])->name('facturas.find');
-    Route::get('/details/{factura_id}', [FacturasController::class, 'getFacturaDetails'])->name('facturas.details');
+    Route::post('/details/{factura_id}', [FacturasController::class, 'getFacturaDetails'])->name('facturas.details');
 });
 
 Route::prefix('kardexes')->group(function () {

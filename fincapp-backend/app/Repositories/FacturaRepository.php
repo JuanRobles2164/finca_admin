@@ -9,4 +9,8 @@ class FacturaRepository extends BaseRepository {
     {
         return new Factura();
     }
+
+    public function getFacturasOrdenInversoId(){
+        return $this->getModel()->orderByDesc('id', 'desc')->get();
+    }
 }

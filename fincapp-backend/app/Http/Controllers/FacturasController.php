@@ -15,7 +15,7 @@ class FacturasController extends Controller
     }
 
     function get(){
-        return json_encode($this->facturaDomain->get());
+        return json_encode($this->facturaDomain->getFacturasReverseOrderById());
     }
 
     function registrarVenta(Request $request){
@@ -28,6 +28,7 @@ class FacturasController extends Controller
     }
 
     function getFacturaDetails(Request $request){
-        return json_encode($this->facturaDomain->getFacturaDetails($request->factura_id));
+        $pdf = $this->facturaDomain->getFacturaDetailsFile($request->factura_id);
+        return $pdf->download('factura_' . $request->factura_id . '.pdf');
     }
 }

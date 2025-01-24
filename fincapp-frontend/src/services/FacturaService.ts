@@ -1,7 +1,6 @@
 import { CONSTANTS } from "@/common/Constants";
 import BaseService from "./BaseService";
 import { Factura } from "@/models/Factura";
-import { FacturaData } from "@/models/pdf/FacturaData";
 
 export default class FacturaService extends BaseService {
     constructor() {
@@ -16,7 +15,18 @@ export default class FacturaService extends BaseService {
         return await this.create<Factura>('create', formData);
     }
 
-    async getFacturaDetails(factura_id: number) : Promise<FacturaData>{
-        return await this.get<FacturaData>(`details/${factura_id}`);
+    async getFacturaDetails(factura_id: number): Promise<Blob> {
+        const response = await fetch(`${CONSTANTS.BASE_API_URL}${CONSTANTS.BASE_API_GROUP.FACTURA}details/${factura_id}`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+        });
+
+        if (!response.ok) {
+            throw new Error('Error al obtener los detalles de la factura');
+        }
+
+        return await response.blob();
     }
 }

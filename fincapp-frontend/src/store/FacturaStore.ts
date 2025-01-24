@@ -1,5 +1,4 @@
 import { Factura } from "@/models/Factura";
-import { FacturaData } from "@/models/pdf/FacturaData";
 import FacturaService from "@/services/FacturaService";
 import { defineStore } from "pinia";
 
@@ -11,7 +10,7 @@ export const useFacturaStore = defineStore('factura', {
         loading: false,
         error: null as string | null,
         factura: {} as Factura,
-        factura_details: {} as FacturaData
+        factura_details: {} as Blob | MediaSource,
     }),
     actions: {
         async fetchFacturas() {
@@ -43,7 +42,6 @@ export const useFacturaStore = defineStore('factura', {
             this.loading = true;
             this.error = null;
             try {
-                debugger;
                 this.factura_details = await facturaService.getFacturaDetails(factura_id);
             } catch (error) {
                 this.error = "Error al consultar los detalles";

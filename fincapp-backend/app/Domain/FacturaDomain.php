@@ -9,7 +9,14 @@ use App\Repositories\FacturaItemKardexRepository;
 use App\Repositories\FacturaRepository;
 use App\Repositories\KardexRepository;
 use App\Repositories\TerceroRepository;
+use Barryvdh\DomPDF\Facade\Pdf as FacadePdf;
+use Barryvdh\DomPDF\PDF;
 use Carbon\Carbon;
+use Dompdf\Adapter\PDFLib;
+use Dompdf\Dompdf;
+use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Storage;
+use Svg\Surface\SurfacePDFLib;
 
 class FacturaDomain extends BaseDomain {
 
@@ -25,6 +32,10 @@ class FacturaDomain extends BaseDomain {
         $this->facturaItemKardexrepository = RepositoryFactory::make(FacturaItemKardexRepository::class);
         $this->evidenciaRepository = RepositoryFactory::make(EvidenciaRepository::class);
         $this->terceroRepository = RepositoryFactory::make(TerceroRepository::class);
+    }
+
+    function getFacturasReverseOrderById(){
+        return $this->repoInstance->getFacturasOrdenInversoId();
     }
 
     /**
@@ -100,12 +111,22 @@ class FacturaDomain extends BaseDomain {
         return $facturaObj;
     }
 
-    function getFacturaDetails($facturaId){
+    function getFacturaDetailsFile($facturaId){
 
         $factura = $this->repoInstance->find($facturaId);
         $venta_materiales = $this->facturaItemKardexrepository->getItemsByFacturaId($facturaId);
+        Log::info("Venta Materiales encontrados", ['factura_id' => $facturaId, 'venta_materiales' => $venta_materiales]);
         $cliente = $this->terceroRepository->find($factura->tercero_id);
         $evidencia = $this->evidenciaRepository->getEvidenciaByFacturaId($facturaId);
-        return [$factura, $venta_materiales, $cliente, $evidencia];
+
+        foreach ($evidencia as $img) {
+            $img->url = Storage::url($img->path);
+            $img->absolute_path = Storage::path($img->path);
+        }
+
+        Log::info("Evidencia encontrada", ['factura_id' => $facturaId, 'evidencia' => $evidencia]);
+
+        $pdf = FacadePdf::loadView('facturas', compact('factura', 'venta_materiales', 'cliente', 'evidencia'));
+        return $pdf;
     }
 }

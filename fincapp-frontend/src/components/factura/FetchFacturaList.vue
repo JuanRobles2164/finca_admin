@@ -67,7 +67,7 @@
             <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900 font-medium">{{ formatCurrency(factura.total ??
               0) }}</td>
             <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900 font-medium">
-              <button @click="openModalAndDownloadPDF(factura.id)">
+              <button @click="downloadPDF(factura.id)">
                 📄 Descargar
               </button>
             </td>
@@ -89,40 +89,20 @@
 
   <div ref="facturaComponentWrapper"></div>
 
-  <div v-if="showModal" style="display: none;">
-    <FacturaPDF :factura_id="facturaId" ref="FacturaPDF" @pdfGenerated="closeModal" />
-  </div>
-
 </template>
 
 <script lang="ts">
-import { computed, defineComponent, ref } from "vue";
+import { computed, defineComponent } from "vue";
 import { useFacturaStore } from "@/store/FacturaStore";
 import { useRouter } from 'vue-router';
-import FacturaPDF from "@/components/factura/FacturaPDF.vue";
 
 export default defineComponent({
-  components: {
-    FacturaPDF,
-  },
+  components: {},
   setup() {
     const facturaStore = useFacturaStore();
     const router = useRouter();
     const facturas = computed(() => facturaStore.facturas);
     const { fetchFacturas, loading, error } = facturaStore;
-
-    const showModal = ref(false);
-    const facturaId = ref<number>(0);
-
-    const openModalAndDownloadPDF = (id: number) => {
-      facturaId.value = id;
-      showModal.value = true;
-    };
-
-    const closeModal = () => {
-      showModal.value = false;
-      facturaId.value = 0;
-    };
 
     const formatDate = (dateString: string) => {
       return new Date(dateString).toLocaleDateString('es-ES', {
@@ -147,19 +127,32 @@ export default defineComponent({
       router.push({ name: 'EditarFactura', params: { id: id.toString() } });
     };
 
+    const downloadPDF = async (factura_id: number) => {
+      await facturaStore.facturaDetails(factura_id);
+      const blob = facturaStore.factura_details;
+      if (blob) {
+        const url = window.URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = `factura_${factura_id}_${Date.now()}.pdf`;
+        document.body.appendChild(a);
+        a.click();
+        a.remove();
+      } else {
+        console.error("No se pudo obtener el PDF");
+      }
+    };
+
     return {
       fetchFacturas,
       facturas,
       loading,
       error,
-      showModal,
-      facturaId,
-      openModalAndDownloadPDF,
-      closeModal,
       formatDate,
       formatCurrency,
       verDetalles,
-      editarFactura
+      editarFactura,
+      downloadPDF
     };
   },
 });
