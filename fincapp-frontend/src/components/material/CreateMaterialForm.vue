@@ -101,6 +101,7 @@ export default defineComponent({
                 tipo_material: '',
                 requiere_procesar: false,
             }
+            material.value.data = materialParameter;
         };
 
         const handleSubmit = async () => {

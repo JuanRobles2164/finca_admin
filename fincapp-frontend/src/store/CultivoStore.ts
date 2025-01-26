@@ -3,6 +3,7 @@ import { AgregarCultivoRequest } from "@/models/request/cultivo/AgregarCultivoRe
 import { ConsumirInsumosPorCultivoRequest } from "@/models/request/cultivo/ConsumirInsumosPorCultivoRequest";
 import { finalizarCosechaRequest } from "@/models/request/cultivo/FinalizarCosechaRequest";
 import { RecogerCosechaRequest } from "@/models/request/cultivo/RecogerCosechaRequest";
+import { CultivoVigente } from "@/models/response/cultivo/CultivosVigente";
 import CultivoService from "@/services/CultivoService";
 import { defineStore } from "pinia";
 
@@ -12,7 +13,8 @@ export const useCultivoStore = defineStore('cultivo', {
     state: () => ({
         cultivables: [] as Material[],
         cultivo_obj: {} as Material[],
-        materiales_procesables: [] as Material[],
+        materiales_procesables: [] as CultivoVigente[],
+        cultivos_vigentes: [] as CultivoVigente[],
 
         loading: false,
         error: null as string | null,
@@ -74,7 +76,7 @@ export const useCultivoStore = defineStore('cultivo', {
             this.error = null;
             this.loading = true;
             try {
-                await cultivoService.listarMaterialesProcesables();
+                this.materiales_procesables = await cultivoService.listarMaterialesProcesables();
             } catch (error) {
                 this.error = "Error al listar los materiales procesables";
                 console.log(error);
@@ -95,6 +97,18 @@ export const useCultivoStore = defineStore('cultivo', {
                 this.loading = false;
             }
         },
-    }
 
+        async fetchCultivosVigentes(){
+            this.error = null;
+            this.loading = true;
+            try {
+                this.cultivos_vigentes = await cultivoService.listarCultivosVigentes();
+            } catch (error) {
+                console.log(error);
+                this.error = "Error al consultar los cultivos vigentes";
+            } finally {
+                this.loading = false;
+            }
+        }
+    }
 });

@@ -42,4 +42,8 @@ class CultivosController extends Controller
         $request->cantidad_cosecha_finalizada);
         return json_encode(true);
     }
+
+    function listarCultivosVigentes(){
+        return json_encode($this->cultivoDomain->listarCultivosVigentes());
+    }
 }

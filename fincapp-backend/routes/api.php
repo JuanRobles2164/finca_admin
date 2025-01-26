@@ -67,4 +67,5 @@ Route::prefix('cultivos')->group(function () {
     Route::post('recoger-cosecha', [CultivosController::class, 'recogerCosecha'])->name('cultivos.recogerCosecha');
     Route::get('materiales-procesables', [CultivosController::class, 'listarMaterialesProcesables'])->name('cultivos.listarMaterialesProcesables');
     Route::post('finalizar-cosecha', [CultivosController::class, 'finalizarCosecha'])->name('cultivos.finalizarCosecha');
+    Route::get('listar-cultivos-vigentes', [CultivosController::class, 'listarCultivosVigentes'])->name('cultivos.listarCultivosVigentes');
 });

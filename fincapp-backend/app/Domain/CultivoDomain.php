@@ -159,4 +159,8 @@ class CultivoDomain {
             $this->kardexRepository->registrarMovimientoKardex($materialIdCosechaFinalizada, $cantidadCosechaFinalizada, Constants::KARDEX_TIPO_MOVIMIENTO_ENTRA);
         }
     }
+
+    function listarCultivosVigentes(){
+        return $this->materialRepository->getCultivosVigentes();
+    }
 }

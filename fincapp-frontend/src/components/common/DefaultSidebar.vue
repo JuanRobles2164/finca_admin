@@ -96,6 +96,13 @@ const menuItems = [
       { title: 'Index', link: "facturas" },
     ]
   },
+  {
+    title: 'Cultivos',
+    icon: Leaf,
+    subItems: [
+      { title: 'Index', link: "cultivos" },
+    ]
+  }
   /*{
     title: 'Compras',
     icon: ShoppingCart,
@@ -103,15 +110,7 @@ const menuItems = [
       { title: 'Consultar' },
       { title: 'Crear' }
     ]
-  },
-  {
-    title: 'Cultivos',
-    icon: Leaf,
-    subItems: [
-      { title: 'Consultar' },
-      { title: 'Crear' }
-    ]
-  }*/
+  },*/
 ]
 </script>
 

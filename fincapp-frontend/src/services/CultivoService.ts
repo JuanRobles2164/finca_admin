@@ -5,6 +5,8 @@ import { ConsumirInsumosPorCultivoRequest } from "@/models/request/cultivo/Consu
 import { RecogerCosechaRequest } from "@/models/request/cultivo/RecogerCosechaRequest";
 import { finalizarCosechaRequest } from "@/models/request/cultivo/FinalizarCosechaRequest";
 import { Material } from "@/models/Material";
+import { CultivoVigente } from "@/models/response/cultivo/CultivosVigente";
+import { MaterialProcesable } from "@/models/response/cultivo/MaterialProcesable";
 
 export default class CultivoService extends BaseService {
     constructor() {
@@ -27,11 +29,15 @@ export default class CultivoService extends BaseService {
         return await this.post("recoger-cosecha", recogerCosechaRequest);
     }
 
-    async listarMaterialesProcesables(){
+    async listarMaterialesProcesables() : Promise<MaterialProcesable[]>{
         return await this.get("materiales-procesables", {});
     }
 
     async finalizarCosecha(finalizarCosechaRequest : finalizarCosechaRequest){
         return await this.post("finalizar-cosecha", finalizarCosechaRequest);
+    }
+
+    async listarCultivosVigentes() : Promise<CultivoVigente[]>{
+        return await this.get<CultivoVigente[]>("listar-cultivos-vigentes", {});
     }
 }
